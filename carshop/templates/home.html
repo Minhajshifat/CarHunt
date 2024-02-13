@@ -1,0 +1,73 @@
+{%extends 'base.html'%}
+{%block content%}
+{%load static%}
+<div class="d-flex flex-wrap px-5 pt-3 align-items-center bg-dark">
+
+    <div class="col-6">
+        <h2 class="fs-1 text-danger">Rolls-Royce</h2>
+        <p class="fs-4 text-light">
+            The legendary maker of some of the best luxury cars you can buy has had a reputation of exemplary
+            engineering
+            since its
+            introduction in 1906. While the vehicles are still built in England, Rolls-Royce is actually owned today by
+            BMW.
+            The
+            most expensive Rolls-Royce is the Phantom; Phantom pricing starts at more than $450,000. There's also an
+            SUV,
+            the
+            Cullinan. It's named after—appropriately enough—the largest diamond ever found.
+        </p>
+
+    </div>
+    <img class="col-6" src="{%static 'rolls-royce.jpeg'%}">
+
+
+</div>
+<br>
+<h2 class="text-center">Total {{total}} cars</h2>
+<h5>ALL Brands : </h5>
+<div class="d-flex flex-warp">
+
+    <div class="col-4 d-flex">
+
+        {%for brand in brands%}
+        <div class="mx-3">
+            <input type="radio" class="btn-check" name="brands" id="{{brand.id}}" autocomplete="off">
+            <label class="btn btn-outline-primary" for="{{brand.id}}">
+
+                <a href="{% url 'brandpost' brand.slug %}" class="text-decoration-none text-dark">{{brand.name}}</a>
+
+            </label>
+
+        </div>
+
+        {%endfor%}
+
+    </div>
+    <div class="col-8">
+        <h4>{{data | length}} results found</h4>
+        <div class="d-flex flex-wrap pt-5">
+            {% for post in data %}
+            <div class="col-sm-3">
+                <div class="card border border-info mx-4">
+                    <div class="card-body">
+                        <img src="{{post.image.url}}" class="card-img-top" alt="...">
+                        <h5 class="card-title"><a href="#" class="text-decoration-none text-dark">{{post.name}}</a>
+                        </h5>
+                        <p class="card-text">{{post.description |truncatewords:10}}</p>
+                        <p>Price : {{post.price}}</p>
+                        <p>Brand : {{post.brand_name.name}}</p>
+                        <p>
+                            <a class="btn btn-secondary" href="{% url 'car_detail' post.id%}">View details</a>
+
+                        </p>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+    </div>
+</div>
+
+{%endblock%}
